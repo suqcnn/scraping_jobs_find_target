@@ -66,19 +66,19 @@ def get_job_items():
         # 无内容时候退出循环
         if len(job_list) == 1:
             break
-        jobs = job_list.find_all('div', attrs={'class', 'newlist_detail newlist'})
+        jobs = job_list.findAll('div', {'class': 'newlist_detail newlist'})
         for job in jobs:
             # 职位名称
-            job_name = job.find('li', attrs={'class', 'newlist_deatil_first clearfix zwmc'}).div.a.text
+            job_name = job.find('li', {'class': 'newlist_deatil_first clearfix zwmc'}).div.a.text
             # 公司名称
-            co_name = job.find('li', attrs={'class', 'newlist_deatil_three gsmc'}).a.text
+            co_name = job.find('li', {'class': 'newlist_deatil_three gsmc'}).a.text
             # 公司链接（二级页面）
-            co_link = job.find('li', attrs={'class', 'newlist_deatil_three gsmc'}).a['href']
+            co_link = job.find('li', {'class': 'newlist_deatil_three gsmc'}).a['href']
             # 不确定数目的项目（包括地点、公司性质、公司规模等，需要单独处理）
-            uncertain_items = job.find('li', attrs={'class', 'newlist_deatil_two'}).find_all('span')
+            uncertain_items = job.find('li', {'class': 'newlist_deatil_two'}).find_all('span')
             result = filter_uncertain_items(uncertain_items)
             # 岗位职责
-            duty = job.find('li', attrs={'class', 'newlist_deatil_last'}).text
+            duty = job.find('li', {'class': 'newlist_deatil_last'}).text
 
             # 将爬取的数据存入数据库
             j = Job()

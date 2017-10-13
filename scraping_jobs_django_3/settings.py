@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'scraping_jobs',  # 数据库名称
         'USER': 'tao',
-        'PASSWORD': '121116',
+        'PASSWORD': 'xf121116@love',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
