@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>爬虫前端</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script>
+
+        function check_input() {
+            var content = $('#keywords').val();
+            if ('' === content || null === content) {
+                document.getElementById('info').value = '输入框不能为空！';
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        $(function () {
+            //全局变量
+            var console = $('#info');
+            //请求地址
+            var _startCrawl = '/startCrawl'; // 开启线程
+            var _reset = '/reset'; // 重置状态
+
+            //事件绑定
+            $('#btn_start').click(function () {
+                $.get(_startCrawl, function (data) {
+                    console.val(data.mess)
+                });
+            });
+
+            $('#reset').click(function () {
+                if (confirm('是否确认重置？')) {
+                    $.get(_reset, function (data) {
+                        console.val(data.mess)
+                    })
+                }
+            });
+
+            //功能函数
+
+
+            //程序入口
+            console.val('欢迎使用本程序，这里是状态栏。我将为您返回操作结果。');
+
+        })
+        ;
+    </script>
+
+    <style type="text/css">
+        /*
+        div {
+            border: 1px solid red;
+        }
+        */
+
+        .main {
+            margin: 10px auto;
+        }
+
+        .console, .list {
+            margin: 10px;
+        }
+
+        .welcome{
+            width:200px;
+            margin:5px auto;
+
+        }
+
+        #info {
+            width: 100%;
+            margin: 5px auto;
+        }
+
+        #search_box {
+            float: right;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        #keywords {
+            width: 300px;
+        }
+
+        #console_button_group {
+            width: 100%;
+            margin: 5px auto;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <div class="welcome">
+        <h3>智联招聘爬虫数据</h3>
+    </div>
+
+    <div class="console">
+        <!-- 控制台 -->
+        <textarea id="info" class="form-control" rows="1" readonly="readonly"></textarea>
+        <!--控制按钮组-->
+        <div id="console_button_group">
+            <button id="btn_start" class="btn btn-default">启动爬虫</button>
+        </div>
+
+        <!--<input id="reset" type="button" value="线程状态重置">-->
+    </div>
+    <hr/>
+    <div class="list">
+        <!-- 数据展示 -->
+
+        <div id="search_box">
+            <form action="/searchJob" method="get" onsubmit="return check_input()">
+                <input id="keywords" name="keywords" type="text" placeholder="请输入过滤关键字，以逗号分割">
+                <button id="search_button" class="btn btn-default" type="submit">查询</button>
+            </form>
+        </div>
+
+        <table id="data" class="table table-striped">
+            <th>公司</th>
+            <th>职位</th>
+            <th>链接</th>
+            <th>抓取日期</th>
+            {% for i in list %}
+                <tr>
+                    <td>{{ i.co_name }}</td>
+                    <td>{{ i.job_name }}</td>
+                    <td><a href="{{ i.co_link }}">进入详情页</a></td>
+                    <td>{{ i.scraping_time|date:"Y-m-j H:i:s" }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>没有查询到数据</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+</html>
