@@ -31,7 +31,7 @@ def start_crawl(request):
         return JsonResponse({'mess': '今日已执行过爬虫!'})
     else:
         global p
-        Thread(target=crawl_timing_process, name='crawl_daemon').start()
+        Thread(target=crawl_timing_process).start()
         ProcessRecord.objects.filter(process='crawl').update(is_started=True)
         print('爬虫进程启动...')
         return JsonResponse({'mess': '爬虫进程已经启动'})

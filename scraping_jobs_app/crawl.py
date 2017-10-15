@@ -132,32 +132,21 @@ def filter_uncertain_items(items):
     return known_items
 
 
-def already_scraped():
-    """
-    检查今天是否执行过爬虫
-    :return:
-    """
-    cdt_today = datetime.date.today().__str__()
-    result = ScrapingRecord.objects.filter(scraping_date__range=[cdt_today + u' 0:00:00', cdt_today + u' 23:59:59'])
-    if result:
-        return True
-    return False
-
-
 def crawl_timing_process():
     """
     用定时执行爬虫的进程
     :return:
     """
     while True:
-        print('daemon运行中...')
+        # print('daemon运行中...')
+
         if already_scraped():
             print('今天已经执行过爬虫...')
         else:
             print('开始执行爬虫')
             get_job_items()
             print('爬虫执行完毕')
-        time.sleep(1)
+        time.sleep(60*60)
 
 
 def daemon_is_running():
@@ -167,3 +156,13 @@ def daemon_is_running():
     """
     p = ProcessRecord.objects.get(process='crawl')
     return p.is_started
+
+
+def already_scraped():
+    """
+    检查今天是否执行过爬虫
+    :return:
+    """
+    cdt_today = datetime.date.today().__str__()
+    result = ScrapingRecord.objects.filter(scraping_date__range=[cdt_today + u' 0:00:00', cdt_today + u' 23:59:59'])
+    return result

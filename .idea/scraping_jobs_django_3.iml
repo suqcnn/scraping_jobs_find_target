@@ -12,7 +12,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Remote Python 3.5.2 (sftp://deeplearning@180.101.225.179:22/usr/bin/python3)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.6 (sftp://deeplearning@180.101.225.179:22/usr/bin/python3.6)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

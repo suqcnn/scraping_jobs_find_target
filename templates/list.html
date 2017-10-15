@@ -43,7 +43,7 @@
             });
 
             $('#reset').click(function () {
-                if (confirm('是否确认重置？')) {
+                if (confirm('警告！重置有可能导致数据冗余！是否确定？')) {
                     $.get(_reset, function (data) {
                         console.val(data.mess)
                     })
@@ -75,9 +75,9 @@
             margin: 10px;
         }
 
-        .welcome{
-            width:200px;
-            margin:5px auto;
+        .welcome {
+            width: 200px;
+            margin: 5px auto;
 
         }
 
@@ -117,9 +117,8 @@
         <!--控制按钮组-->
         <div id="console_button_group">
             <button id="btn_start" class="btn btn-default">启动爬虫</button>
+            <button id="reset" class="btn btn-default">状态重置</button>
         </div>
-
-        <!--<input id="reset" type="button" value="线程状态重置">-->
     </div>
     <hr/>
     <div class="list">
